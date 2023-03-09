@@ -2,10 +2,6 @@ import pygame
 from os import listdir
 from os.path import isfile, join
 
-
-
-
-
 class Player(pygame.sprite.Sprite):
     COLOR = (255, 0 , 0)
     GRAVITY = 1
@@ -23,6 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.direction = "left"
         self.animaiton_count = 0
         self.fall_count = 0
+        self.game = game
     
     def flip(self, sprites):
         return [pygame.transform.flip(sprite, True, False) for sprite in sprites]
@@ -71,8 +68,8 @@ class Player(pygame.sprite.Sprite):
             self.direction = 'right'
             self.animaiton_count = 0
 
-    def loop(self, fps):
-        self.y_vel += min(1, (self.fall_count/fps) *self.GRAVITY)
+    def loop(self):
+        self.y_vel += min(1, (self.fall_count/self.game.settings.FPS) *self.GRAVITY)
         self.move(self.x_vel, self.y_vel)
 
         self.fall_count += 1
